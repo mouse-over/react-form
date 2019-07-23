@@ -16,3 +16,7 @@ yarn:
 ```sh
 yarn add @mouseover/react-form
 ```
+
+## License
+
+MIT

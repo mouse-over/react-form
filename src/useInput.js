@@ -1,5 +1,6 @@
 import {useState, useCallback} from 'react';
 import {parseFloatOrNull, parseIntOrNull} from "./utils";
+import {isEmpty} from "@mouseover/js-validation";
 
 const readValueFromEvent = (event) => {
     if (!event || !event.target) {
@@ -23,7 +24,7 @@ const useValue = (currentValue, valueType, changeCallback) => {
                 value = parseFloatOrNull(value);
                 break;
             default:
-                if (value === '') {
+                if (isEmpty(value)) {
                     value = null;
                 }
                 break;
@@ -49,16 +50,12 @@ export const useInput = (props) => {
     const [touched, setTouched] = useState(false);
 
     const changeCallback = useCallback((changedValue) => {
-
-        if (!touched) {
-            setTouched(changedValue !== defaultValue);
-        }
-
         if (onChange) {
             onChange(changedValue, name);
         }
 
-    }, [defaultValue, name, onChange, touched]);
+        setTouched(changedValue !== defaultValue);
+    }, [name, onChange, defaultValue]);
 
     const [value, setValue] = useValue(currentValue, valueType, changeCallback);
 

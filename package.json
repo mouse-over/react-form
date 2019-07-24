@@ -1,6 +1,6 @@
 {
   "name": "@mouseover/react-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/react-form.js",
   "repository": "github:mouse-over/react-form",
   "scripts": {
@@ -13,8 +13,7 @@
   "license": "MIT",
   "files": [
     "src",
-    "lib",
-    "dist"
+    "lib"
   ],
   "devDependencies": {
     "@babel/core": "^7.5.5",

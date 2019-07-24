@@ -16,8 +16,8 @@ export const Input = (props) => {
     const {
         name,
         label = null,
-        elementType = 'text',
-        valueType = 'text',
+        elementType,
+        valueType,
         onChange,
         groupClass = 'form-group',
         elementConfig = {},
@@ -46,23 +46,25 @@ export const Input = (props) => {
         inputClasses.push('form-control');
     }
 
-    if (touched !== false && (!valid)) {
+    if (!valid) {
         inputClasses.push('invalid');
     }
 
     const elementProps = {
         className: inputClasses.join(' '),
         ...elementConfig,
-        ...element,
+        ...element
     };
 
-    switch (elementType) {
+    const renderElementType = elementType || 'text';
+
+    switch (renderElementType) {
         case ('textarea'):
             inputElement = <DebounceInput {...props} elementProps={elementProps}/>;
             break;
 
         case ('select'):
-            const {options = []} = elementProps;
+            const {options = []} = props;
             inputElement = (<select {...elementProps}>
                 {options.map((option, key) => (
                     <option
@@ -75,7 +77,7 @@ export const Input = (props) => {
         case ('checkbox'):
             elementProps.type = 'checkbox';
             elementProps.checked = elementProps.value;
-            delete elementProps.value;
+            elementProps.value = label;
             inputElement = (<input {...elementProps}/>);
             break;
 
@@ -109,7 +111,7 @@ export const Input = (props) => {
         </div>
     );
 
-    if (elementType === 'checkbox') {
+    if (renderElementType === 'checkbox') {
         body = (
             <div className={groupClass}>
                 <label>

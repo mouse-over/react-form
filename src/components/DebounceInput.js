@@ -3,45 +3,50 @@ import React, {useState, useCallback, useEffect, useRef} from 'react';
 export const DebounceInput = (props) => {
 
     const {debounce = 500, elementType, elementProps: inElementProps} = props;
-    const {onChange, value} = inElementProps;
-    const [currentEvent, setCurrentEvent] = useState({target: {value: value}});
+    const {onChange} = inElementProps;
+    const [currentEvent, setCurrentEvent] = useState(null);
     const [hasFocus, setHasFocus] = useState(false);
+    const [propagate, setPropagate] = useState(false);
 
     const handleFocus = useCallback(() => {
         setHasFocus(true);
     }, []);
 
-    const changeCallback = useCallback(() => {
+    const handleBlur = useCallback(() => {
         if (currentEvent) {
+            setPropagate(true);
+        }
+        setHasFocus(false);
+    }, [currentEvent]);
+
+    useEffect(() => {
+        if (currentEvent && propagate) {
             onChange(currentEvent);
             setCurrentEvent(null);
+            setPropagate(false);
         }
-    }, [onChange, currentEvent, setCurrentEvent]);
-
-    const handleBlur = useCallback(() => {
-        changeCallback();
-        setHasFocus(false);
-    }, [changeCallback]);
+    }, [currentEvent, propagate]);
 
     const handleChange = useCallback((event) => {
         setCurrentEvent({target: event.target});
-    }, []);
+        if (!debounce) {
+            setPropagate(true);
+        }
+    }, [debounce]);
 
     const handleKey = useCallback((event) => {
         if (event.key === "Enter") {
-            changeCallback();
+            setPropagate(true)
         }
-    }, [changeCallback]);
+    }, []);
 
     const debounceIntervalRef = useRef(null);
 
     useEffect(()=> {
         if (hasFocus && debounce) {
             debounceIntervalRef.current = setTimeout(() => {
-                changeCallback();
+                setPropagate(true);
             }, debounce);
-        } else {
-            changeCallback();
         }
         return () => {
             if (debounceIntervalRef.current) {
@@ -49,7 +54,7 @@ export const DebounceInput = (props) => {
                 debounceIntervalRef.current = null;
             }
         }
-    }, [changeCallback, debounce, hasFocus]);
+    }, [debounce, hasFocus]);
 
     const elementProps = {
         ...inElementProps,

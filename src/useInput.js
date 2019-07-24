@@ -30,8 +30,10 @@ const useValue = (currentValue, valueType, changeCallback) => {
                 break;
         }
 
-        changeCallback(value);
-    }, [valueType, changeCallback]);
+     //   if (currentValue !== value) {
+            changeCallback(value);
+     //   }
+    }, [valueType, changeCallback, currentValue]);
 
     return [currentValue, setValue];
 };
@@ -61,18 +63,18 @@ export const useInput = (props) => {
 
     const setValueCallback = useCallback(
         (event) => setValue(readValueFromEvent(event)),
-        [setValue]
+        [setValue, currentValue]
     );
 
     return {
         value,
         touched,
-        valid: validation && validation.valid ? validation.valid : true,
+        valid: validation && validation.valid !== undefined? validation.valid : true,
         messages: validation && validation.messages ? validation.messages : [],
         defaultValue,
         element: {
             name,
-            value: value || '',
+            value: !isEmpty(value) ? value : '',
             onChange: setValueCallback,
         }
     };

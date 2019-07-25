@@ -26,7 +26,6 @@ test('Render Input', () => {
     const {inputElement, getByText} = setup(props);
     expect(getByText('label')).toBeDefined();
     expect(inputElement.value).toBe('value');
-
 });
 
 test('Render Input with append and prepend', () => {
@@ -107,6 +106,12 @@ test('Render select', () => {
     changeProps({value: 'one'});
 
     expect(inputElement.value).toEqual('one');
+});
+
+test('Render textarea', () => {
+    const {inputElement, getByText} = setup({...props, elementType: 'textarea'});
+    expect(getByText('label')).toBeDefined();
+    expect(inputElement.value).toBe('value');
 });
 
 

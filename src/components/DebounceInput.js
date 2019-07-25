@@ -47,6 +47,8 @@ export const DebounceInput = (props) => {
             debounceIntervalRef.current = setTimeout(() => {
                 setPropagate(true);
             }, debounce);
+        } else if (debounce) {
+            setPropagate(true);
         }
         return () => {
             if (debounceIntervalRef.current) {

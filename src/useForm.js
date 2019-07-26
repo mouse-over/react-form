@@ -33,9 +33,7 @@ const initialState = {
 };
 
 const formReducer = (validator) => {
-    console.log('[formReducer][CREATE]', validator);
     return (state, action) => {
-        console.log('[formReducer][ACTION]', action);
         switch (action.type) {
             case CHANGE_FIELD_VALUE:
                 return {
@@ -138,7 +136,7 @@ export const useForm = (props) => {
         if (onValueChange && lastChanged.length === 1) {
             const name = lastChanged[0];
             const value = state.values[name];
-            onValueChange(name, value, state.validation[name]);
+            onValueChange(name, value, state.validation.children[name] ? state.validation.children[name].valid : null);
         }
 
         if (onValuesChange && lastChanged.length > 0) {

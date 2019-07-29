@@ -33,12 +33,9 @@ const mapInput = (form, defaultGroupClass) => (input) => {
         return null;
     }
     return (<FormField
+            {...input}
             form={form}
-            key={input.key}
             name={input.key}
-            elementType={input.elementType}
-            elementConfig={input.elementConfig}
-            label={input.label}
             groupClass={input.groupClass ? input.groupClass : defaultGroupClass}
         />
     );

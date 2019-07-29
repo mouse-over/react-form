@@ -14,7 +14,9 @@ export const DebounceInput = (props) => {
 
     const handleBlur = useCallback(() => {
         if (currentEvent) {
-            setPropagate(true);
+            onChange(currentEvent);
+            setCurrentEvent(null);
+            setPropagate(false);
         }
         setHasFocus(false);
     }, [currentEvent]);
@@ -43,12 +45,16 @@ export const DebounceInput = (props) => {
     const debounceIntervalRef = useRef(null);
 
     useEffect(()=> {
-        if (hasFocus && debounce) {
-            debounceIntervalRef.current = setTimeout(() => {
+        if (currentEvent) {
+            if (hasFocus && debounce) {
+                debounceIntervalRef.current = setTimeout(() => {
+                    if (hasFocus) {
+                        setPropagate(true);
+                    }
+                }, debounce);
+            } else if (debounce) {
                 setPropagate(true);
-            }, debounce);
-        } else if (debounce) {
-            setPropagate(true);
+            }
         }
         return () => {
             if (debounceIntervalRef.current) {
@@ -56,7 +62,7 @@ export const DebounceInput = (props) => {
                 debounceIntervalRef.current = null;
             }
         }
-    }, [debounce, hasFocus]);
+    }, [debounce, hasFocus, currentEvent]);
 
     const elementProps = {
         ...inElementProps,

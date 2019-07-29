@@ -46,6 +46,10 @@ export const Input = (props) => {
         inputClasses.push('form-control');
     }
 
+    if (touched) {
+        inputClasses.push('touched');
+    }
+
     if (!valid) {
         inputClasses.push('invalid');
     }

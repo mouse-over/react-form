@@ -1,12 +1,14 @@
 {
   "name": "@mouseover/react-form",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "lib/react-form.js",
   "repository": "github:mouse-over/react-form",
   "scripts": {
     "build": "rollup -c",
     "test.watch": "yarn test --watchAll",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [],
   "author": "Vaclav Prokes <vprokes@mouose-over.net>",
@@ -20,8 +22,13 @@
     "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^5.1.9",
+    "@storybook/addon-links": "^5.1.9",
+    "@storybook/addons": "^5.1.9",
+    "@storybook/react": "^5.1.9",
     "@testing-library/react": "^8.0.5",
     "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
     "jest": "^24.8.0",
     "react-dom": "^16.8.6",
     "rollup": "^1.17.0",

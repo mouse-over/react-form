@@ -56,7 +56,7 @@ export const useInput = (props) => {
             onChange(changedValue, name);
         }
 
-        setTouched(changedValue !== defaultValue);
+        setTouched(true);//changedValue !== defaultValue);
     }, [name, onChange, defaultValue]);
 
     const [value, setValue] = useValue(currentValue, valueType, changeCallback);

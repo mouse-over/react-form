@@ -8,7 +8,7 @@
     "test.watch": "yarn test --watchAll",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o docs"
   },
   "keywords": [],
   "author": "Vaclav Prokes <vprokes@mouose-over.net>",

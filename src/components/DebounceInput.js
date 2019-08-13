@@ -30,6 +30,7 @@ export const DebounceInput = (props) => {
     }, [currentEvent, propagate]);
 
     const handleChange = useCallback((event) => {
+        console.log('[handleChange]', event.target.value);
         setCurrentEvent({target: event.target});
         if (!debounce) {
             setPropagate(true);
@@ -38,9 +39,11 @@ export const DebounceInput = (props) => {
 
     const handleKey = useCallback((event) => {
         if (event.key === "Enter") {
-            setPropagate(true)
+            onChange(event);
+            setCurrentEvent(null);
+            setPropagate(false);
         }
-    }, []);
+    }, [currentEvent]);
 
     const debounceIntervalRef = useRef(null);
 
@@ -69,7 +72,7 @@ export const DebounceInput = (props) => {
         onChange: handleChange,
         onFocus: handleFocus,
         onBlur: handleBlur,
-        onKeyPress: handleKey
+        onKeyDown: handleKey
     };
 
     if (hasFocus && currentEvent && currentEvent.target) {

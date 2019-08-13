@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from "./Input";
+import {getValue} from "./../utils";
 
 export const FormField = (props) => {
     const {form, name} = props;
@@ -7,9 +8,9 @@ export const FormField = (props) => {
     return (<Input
         {...props}
         name={name}
-        value={values.hasOwnProperty(name) ? values[name] : null}
-        validation={validation.hasOwnProperty(name) ? validation[name] : null}
-        defaultValue={defaultValues && defaultValues.hasOwnProperty(name) ? defaultValues[name] : null}
+        value={getValue(values, name)}
+        validation={getValue(validation, name)}
+        defaultValue={getValue(defaultValues, name)}
         onChange={setValue}
     />);
 };

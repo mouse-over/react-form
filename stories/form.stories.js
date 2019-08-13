@@ -80,4 +80,39 @@ storiesOf('Form', module)
                 form={form}/>
         </>}>
         <button type="submit" className="btn btn-primary">Sign in</button>
+    </Form>)
+    .add('authentication using render and nested names', () => <Form
+        onChange={action('onChange')}
+        onSubmit={action('onSubmit')}
+        validationRules={{
+            username: {
+                required: true,
+                minLength: 4
+            },
+            password: {
+                required: true,
+                minLength: 4
+            }
+        }}
+        render={(form) => <>
+            <FormField
+                name={['auth','username']}
+                label='Username'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide username',
+                }}
+                form={form}/>
+            <FormField
+                name={['auth','password']}
+                label='Password'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide password',
+                }}
+                form={form}/>
+        </>}>
+        <button type="submit" className="btn btn-primary">Sign in</button>
     </Form>);

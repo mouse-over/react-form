@@ -1,29 +1,12 @@
-import {useCallback, useEffect, useReducer, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useReducer} from 'react';
 import {updateValidationResult} from "@mouseover/js-validation";
 import {useValidator} from "@mouseover/js-validation-hook";
-import {shallowEqual, mergeDeep} from "./utils";
+import {mergeDeep, shallowEqual, updateValue} from "./utils";
 
 const CHANGE_FIELD_VALUE = 'change_field_value';
 const CHANGE_FIELDS_VALUES = 'change_fields_values';
 const CHANGE_FROM_OUTSIDE = 'change_from_outside';
 const CLEAR_FIELD_VALUE = 'reset_field';
-
-const updateValue = (state, name, value) => {
-    if (Array.isArray(name)) {
-        const path = [...name];
-        const current = path.shift();
-
-        if (path.length === 0) {
-            return updateValue(state, current, value);
-        } else {
-            const currentState = state[current] || {};
-
-            return {...state, [current]: updateValue(currentState, path, value)};
-        }
-    } else {
-        return {...state, [name]: value};
-    }
-};
 
 const initialState = {
     values: {},

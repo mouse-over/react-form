@@ -30,7 +30,6 @@ export const DebounceInput = (props) => {
     }, [currentEvent, propagate]);
 
     const handleChange = useCallback((event) => {
-        console.log('[handleChange]', event.target.value);
         setCurrentEvent({target: event.target});
         if (!debounce) {
             setPropagate(true);

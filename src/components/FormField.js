@@ -1,11 +1,11 @@
 import React from 'react';
-import Input from "./Input";
+import FieldGroup from "./FieldGroup";
 import {getValue} from "./../utils";
 
 export const FormField = (props) => {
     const {form, name} = props;
     const {values = {}, validation = {}, defaultValues = {}, setValue} = form;
-    return (<Input
+    return (<FieldGroup
         {...props}
         name={name}
         value={getValue(values, name)}

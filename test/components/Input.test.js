@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {cleanup, render, fireEvent} from "@testing-library/react";
-import {Input} from "../../src/components";
+import {FieldGroup} from "../../src/components";
 
 afterEach(cleanup);
 
@@ -13,22 +13,22 @@ const props = {
 };
 
 const setup = (props) => {
-    const output = render(<Input {...props}/>);
+    const output = render(<FieldGroup {...props}/>);
     const inputElement = output.getByTestId('test-input');
     return {
         inputElement,
         ...output,
-        changeProps: (changedProps) => output.rerender(<Input {...{...props, ...changedProps}}/>)
+        changeProps: (changedProps) => output.rerender(<FieldGroup {...{...props, ...changedProps}}/>)
     }
 };
 
-test('Render Input', () => {
+test('Render FieldGroup', () => {
     const {inputElement, getByText} = setup(props);
     expect(getByText('label')).toBeDefined();
     expect(inputElement.value).toBe('value');
 });
 
-test('Render Input with append and prepend', () => {
+test('Render FieldGroup with append and prepend', () => {
     const {getByText} = setup({
         ...props,
         renderPrepend: () => <div>PREPEND</div>,
@@ -38,7 +38,7 @@ test('Render Input with append and prepend', () => {
     expect(getByText('PREPEND')).toBeDefined();
 });
 
-test('Render Input with value change', () => {
+test('Render FieldGroup with value change', () => {
     const {inputElement, changeProps} = setup(props);
 
     // mimic value change
@@ -47,7 +47,7 @@ test('Render Input with value change', () => {
     expect(inputElement.value).toBe('changed value');
 });
 
-test('Render Input with failed validation', () => {
+test('Render FieldGroup with failed validation', () => {
     const {inputElement, getByText, changeProps} = setup({...props, debounce: null});
 
     expect(getByText('label')).toBeDefined();

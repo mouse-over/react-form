@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import {Input} from "../src/components";
+import {FieldGroup} from "../src/components";
 import WrapperDecorator from "./WrapperDecorator";
 
 const InputHoc = ({value:inValue, ...props}) => {
     const [value, setValue] = useState(inValue);
-    return <><Input label="Label " name="test"  {...props} onChange={(inputValue) => setValue(inputValue)} value={value}/> <pre>{value}</pre></>;
+    return <><FieldGroup label="Label " name="test"  {...props} onChange={(inputValue) => setValue(inputValue)} value={value}/> <pre>{value}</pre></>;
 };
 
 

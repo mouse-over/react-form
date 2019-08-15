@@ -66,7 +66,7 @@ test('FormField use validation and defaultValues', () => {
         form: {
             ...form,
             values: {name: 'changed value'},
-            validation: {'name': {valid: false, messages: ['error']}}
+            validation: {children: {'name': {valid: false, messages: ['error']}}}
         }
     });
 

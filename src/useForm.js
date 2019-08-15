@@ -72,6 +72,7 @@ export const useForm = (props) => {
         validationRules: rules
     } = props;
 
+    console.log(rules);
     const validator = useValidator(rules);
     const memoizedReducer = useMemo(() => formReducer(validator), [validator]);
     const [state, dispatch] = useReducer(
@@ -136,7 +137,6 @@ export const useForm = (props) => {
         values: state.values,
         defaultValues: state.lastInputValues,
         lastChanged: lastChanged,
-        validation: state.validation.children,
-        valid: state.validation.valid,
+        validation: state.validation
     };
 };

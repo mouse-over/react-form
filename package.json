@@ -36,8 +36,8 @@
     "rollup-plugin-local-resolve": "^1.0.7"
   },
   "dependencies": {
-    "@mouseover/js-validation": "^1.0.2",
-    "@mouseover/js-validation-hook": "^1.0.4",
+    "@mouseover/js-validation": "^1.0.3",
+    "@mouseover/js-validation-hook": "^1.0.5",
     "react": "^16.8.6"
   }
 }

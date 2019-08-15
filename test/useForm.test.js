@@ -58,7 +58,7 @@ test('useForm output props check', () => {
     expect(valuesRef.current.defaultValues).toStrictEqual(values);
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo', 'bar']);
     expect(valuesRef.current.validation).toBeInstanceOf(Object);
-    expect(valuesRef.current.valid).toBeTruthy();
+    expect(valuesRef.current.validation.valid).toBeTruthy();
 });
 
 test('useForm change single value valid', () => {
@@ -71,7 +71,7 @@ test('useForm change single value valid', () => {
     const expectedValues = {...values, foo: 12};
     expect(valuesRef.current.values).toStrictEqual(expectedValues);
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo']);
-    expect(valuesRef.current.valid).toBeTruthy();
+    expect(valuesRef.current.validation.valid).toBeTruthy();
 
     expect(onValueChange).toBeCalledWith('foo', 12, true);
     expect(onValuesChange).toBeCalledWith(expectedValues, true);
@@ -84,7 +84,7 @@ test('useForm change single value invalid', () => {
         valuesRef.current.setValue(2, 'foo');
     });
 
-    expect(valuesRef.current.valid).toBeFalsy();
+    expect(valuesRef.current.validation.valid).toBeFalsy();
     expect(onValueChange).toBeCalledWith('foo', 2, false);
     expect(onValuesChange).toBeCalledWith({...values, foo: 2}, false);
 });
@@ -100,7 +100,7 @@ test('useForm change multiple values valid', () => {
 
     expect(valuesRef.current.values).toStrictEqual(expectedValues);
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo', 'bar']);
-    expect(valuesRef.current.valid).toBeTruthy();
+    expect(valuesRef.current.validation.valid).toBeTruthy();
 
     expect(onValuesChange).toBeCalledWith(expectedValues, true);
 });
@@ -114,7 +114,7 @@ test('useForm change multiple values invalid', () => {
         valuesRef.current.setValues(expectedValues);
     });
 
-    expect(valuesRef.current.valid).toBeFalsy();
+    expect(valuesRef.current.validation.valid).toBeFalsy();
 
     expect(onValuesChange).toBeCalledWith(expectedValues, false);
 });
@@ -124,14 +124,14 @@ test('useForm change from outside', () => {
 
     // mimic outside change with unvalid values
     changeProps({values: {foo: 2, bar: 'changed value'}});
-    expect(valuesRef.current.valid).toBeFalsy();
+    expect(valuesRef.current.validation.valid).toBeFalsy();
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo', 'bar']);
     expect(onValueChange).not.toBeCalled();
     expect(onValuesChange).toBeCalled();
 
     // mimic outside change with valid single value
     changeProps({values: {foo: 12}});
-    expect(valuesRef.current.valid).toBeTruthy();
+    expect(valuesRef.current.validation.valid).toBeTruthy();
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo']);
     expect(onValueChange).toBeCalled();
     expect(onValuesChange).toBeCalled();

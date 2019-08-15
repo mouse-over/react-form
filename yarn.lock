@@ -1223,18 +1223,23 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@mouseover/js-validation-hook@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@mouseover/js-validation-hook/-/js-validation-hook-1.0.4.tgz#ef0227bf3b4b13f6be01a9eb49ecadf3becf6565"
-  integrity sha512-YSPPm+5nEkD47yfymSz7FCurTlh0uJeKrAktgjCt/DT3pOb/D6X4X/hmpUnDB2xdoVnkk/I3TZTN4K+Cy5yX8A==
+"@mouseover/js-validation-hook@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@mouseover/js-validation-hook/-/js-validation-hook-1.0.5.tgz#9c49779ff63580993c4033c324b232357721d279"
+  integrity sha512-/lr8zA8omq0IJGKQZAeMkjsEgqsXkfpu4GI+1iDpEoxzDfeJVVE64vRA1zRVr4VjehqkUUNiyG8CYfiAwVUYoQ==
   dependencies:
     "@mouseover/js-validation" "^1.0.0"
     react "^16.8.6"
 
-"@mouseover/js-validation@^1.0.0", "@mouseover/js-validation@^1.0.2":
+"@mouseover/js-validation@^1.0.0":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@mouseover/js-validation/-/js-validation-1.0.2.tgz#89db224b16cabf33fde52de4bdd6f5d0d0c00c6f"
   integrity sha512-fpHLcoJcb1F0+BclPZiKD0+94YGPomWlM+uCsN12pTc8ul6JbdsuBVahrR6QFIJuBj+MntHRUd9NCFX7GPUl9w==
+
+"@mouseover/js-validation@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@mouseover/js-validation/-/js-validation-1.0.3.tgz#83ada5bd6bf36b441770199be9f13dd3d5de3920"
+  integrity sha512-jgZUTNuNAC7ZiDEaIdO0bu/3iwpFOSB9S1gc6Q225ZETjPU0+DXoNYwtcjvUCzIIUYudipD+lhxM7BPpqGLDJg==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"

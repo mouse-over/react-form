@@ -4,7 +4,7 @@ export const mergeDeep = (state, values) => {
     const entries = Object.entries(values);
 
     if (entries.length === 0) {
-        // no chagnes no state spreed
+        // no changes no state spreed
         return state;
     }
 

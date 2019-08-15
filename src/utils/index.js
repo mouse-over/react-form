@@ -6,3 +6,6 @@ export {shallowEqual} from  './shalowEqueal';
 export {mergeDeep} from './mergeDeep';
 export {updateValue} from './updateValue';
 export {getValue} from './getValue';
+export {mutateOnPath} from './mutateOnPath';
+export {withChangeOnPath} from './withChangeOnPath';
+export {pathWithChildren} from './pathWithChildren';

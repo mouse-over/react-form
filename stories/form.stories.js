@@ -85,14 +85,18 @@ storiesOf('Form', module)
         onChange={action('onChange')}
         onSubmit={action('onSubmit')}
         validationRules={{
-            username: {
-                required: true,
-                minLength: 4
-            },
-            password: {
-                required: true,
-                minLength: 4
-            }
+                auth: {
+                    children: {
+                        username: {
+                            required: true,
+                            minLength: 4
+                        },
+                        password: {
+                            required: true,
+                            minLength: 4
+                        }
+                    }
+                }
         }}
         render={(form) => <>
             <FormField

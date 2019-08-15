@@ -1,6 +1,6 @@
 import React from 'react';
 import FieldGroup from "./FieldGroup";
-import {getValue} from "./../utils";
+import {getValue, pathWithChildren} from "./../utils";
 
 export const FormField = (props) => {
     const {form, name} = props;
@@ -9,7 +9,7 @@ export const FormField = (props) => {
         {...props}
         name={name}
         value={getValue(values, name)}
-        validation={getValue(validation, name)}
+        validation={getValue(validation, pathWithChildren(name))}
         defaultValue={getValue(defaultValues, name)}
         onChange={setValue}
     />);

@@ -26,7 +26,7 @@ const setup = (props) => {
     }
 };
 
-test('DebounceInput focused with debounce', async () => {
+test('DebounceInput focused with debounce and key Enter down confirm', async () => {
     const onChangeMock = jest.fn();
     const {element} = setup({...props, elementProps: {...props.elementProps, onChange: onChangeMock}});
     expect(element.value).toBe('value');
@@ -37,6 +37,24 @@ test('DebounceInput focused with debounce', async () => {
     //- debouncing is set so we must run timers to probe
     act(() => jest.runOnlyPendingTimers());
     //- onChange triggered
+    expect(onChangeMock.mock.calls.length).toBe(1);
+
+    fireEvent.keyDown(element, {key: "Enter"});
+    expect(onChangeMock.mock.calls.length).toBe(2);
+
+    fireEvent.blur(element);
+    // because ENTER key down clears currentEvent
+    expect(onChangeMock.mock.calls.length).toBe(2);
+});
+
+test('DebounceInput focused with debounce and blur confirm', async () => {
+    const onChangeMock = jest.fn();
+    const {element} = setup({...props, elementProps: {...props.elementProps, onChange: onChangeMock}});
+
+    fireEvent.focus(element);
+    fireEvent.change(element, {target: {value: 'changed'}});
+
+    fireEvent.blur(element);
     expect(onChangeMock.mock.calls.length).toBe(1);
 });
 

@@ -34,7 +34,7 @@ const renderMessageElement = ({message}) => (message
 );
 const renderValidationMessages = ({messages, touched}) => messages && touched ? <ValidationMessages messages={messages}/> : null;
 
-const renderInputElement = ({props, elementProps}) => {
+const renderInputElement = (props, elementProps) => {
     switch (props.elementType) {
         case ('select'):
             const {options = []} = props;
@@ -99,7 +99,7 @@ const FieldGroupContent = (props) => {
         render
     } = props;
 
-    const {touched, element, valid, messages} = useInput({
+    const input = useInput({
         name,
         onChange,
         value: inValue,
@@ -108,12 +108,14 @@ const FieldGroupContent = (props) => {
         validation
     });
 
+    const {touched, element, valid} = input;
+
     const inputClasses = createElementClasses({elementType, touched, valid});
     const elementProps = createElementProps({element, elementConfig, inputClasses});
 
     const renders = determineRenderMethods(props);
-    const inputElement = renders.renderInputElement({props, elementProps});
-    const validationMessages = renders.renderValidationMessages({messages, touched});
+    const inputElement = renders.renderInputElement(props, elementProps, input);
+    const validationMessages = renders.renderValidationMessages(input);
     const labelElement = renders.renderLabelElement(props);
     const messageElement = renders.renderMessageElement(props);
 

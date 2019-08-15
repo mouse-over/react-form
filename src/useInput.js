@@ -72,6 +72,7 @@ export const useInput = (props) => {
         valid: validation && validation.valid !== undefined? validation.valid : true,
         messages: validation && validation.messages ? validation.messages : [],
         defaultValue,
+        setValue,
         element: {
             name,
             value: !isEmpty(value) ? value : '',

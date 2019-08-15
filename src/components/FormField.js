@@ -1,6 +1,6 @@
 import React from 'react';
 import FieldGroup from "./FieldGroup";
-import {getValue, pathWithChildren} from "./../utils";
+import {getValue, pathWithChildren} from "@mouseover/js-utils";
 
 export const FormField = (props) => {
     const {form, name} = props;

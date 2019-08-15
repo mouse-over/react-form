@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useMemo, useReducer} from 'react';
 import {updateValidationResult} from "@mouseover/js-validation";
 import {useValidator} from "@mouseover/js-validation-hook";
-import {mergeDeep, shallowEqual, updateValue} from "./utils";
+import {mergeDeep, shallowEqual, updateValue} from "@mouseover/js-utils";
 
 const CHANGE_FIELD_VALUE = 'change_field_value';
 const CHANGE_FIELDS_VALUES = 'change_fields_values';
@@ -72,7 +72,6 @@ export const useForm = (props) => {
         validationRules: rules
     } = props;
 
-    console.log(rules);
     const validator = useValidator(rules);
     const memoizedReducer = useMemo(() => formReducer(validator), [validator]);
     const [state, dispatch] = useReducer(

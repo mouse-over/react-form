@@ -1223,23 +1223,26 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@mouseover/js-validation-hook@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@mouseover/js-validation-hook/-/js-validation-hook-1.0.5.tgz#9c49779ff63580993c4033c324b232357721d279"
-  integrity sha512-/lr8zA8omq0IJGKQZAeMkjsEgqsXkfpu4GI+1iDpEoxzDfeJVVE64vRA1zRVr4VjehqkUUNiyG8CYfiAwVUYoQ==
+"@mouseover/js-utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@mouseover/js-utils/-/js-utils-0.0.1.tgz#e12655bae19746d9cd41a193a7457fd12d905b18"
+  integrity sha512-S0oBWCwAZ/gFm74wQw1JwYCoiC2xr7rU5JhSnLw12mLBJ+1cc3HkFBft5CVJk4JkiNz76RwuibAnjjTuRCTozA==
+
+"@mouseover/js-validation-hook@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@mouseover/js-validation-hook/-/js-validation-hook-1.0.6.tgz#5a190a48d7fce2f5db7491eb61ad37c82f11bbc8"
+  integrity sha512-LvkeuGLg/DacLaRb1RYCyAJENqb1QFYefOVfq9OGEOQ0YaM5zD5yU6hrt5SXYug3mYkEHV0KvmtzLa9vwIU7vA==
   dependencies:
-    "@mouseover/js-validation" "^1.0.0"
+    "@mouseover/js-utils" "^0.0.1"
+    "@mouseover/js-validation" "^1.0.4"
     react "^16.8.6"
 
-"@mouseover/js-validation@^1.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@mouseover/js-validation/-/js-validation-1.0.2.tgz#89db224b16cabf33fde52de4bdd6f5d0d0c00c6f"
-  integrity sha512-fpHLcoJcb1F0+BclPZiKD0+94YGPomWlM+uCsN12pTc8ul6JbdsuBVahrR6QFIJuBj+MntHRUd9NCFX7GPUl9w==
-
-"@mouseover/js-validation@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@mouseover/js-validation/-/js-validation-1.0.3.tgz#83ada5bd6bf36b441770199be9f13dd3d5de3920"
-  integrity sha512-jgZUTNuNAC7ZiDEaIdO0bu/3iwpFOSB9S1gc6Q225ZETjPU0+DXoNYwtcjvUCzIIUYudipD+lhxM7BPpqGLDJg==
+"@mouseover/js-validation@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@mouseover/js-validation/-/js-validation-1.0.4.tgz#d2957949ab8f7fe95ebbf8aae86e25e6ae21950d"
+  integrity sha512-yz/sNK88GaW8jezJL8VBXWO5Me/SVDHiHW3V11v9XLTCvuEItf2IiZkicKLcvcWzy6dGU9axhe2XXLnqIS2+gQ==
+  dependencies:
+    "@mouseover/js-utils" "^0.0.1"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"

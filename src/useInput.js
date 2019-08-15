@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react';
-import {parseFloatOrNull, parseIntOrNull} from "./utils";
-import {isEmpty} from "@mouseover/js-validation";
+import {parseFloatOrNull, parseIntOrNull} from "@mouseover/js-utils";
+import {isEmpty} from "@mouseover/js-utils";
 
 const readValueFromEvent = (event) => {
     if (!event || !event.target) {

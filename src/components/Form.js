@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from "../useForm";
 import {FormField} from "./FormField";
-import {shallowEqual} from "../utils";
+import {shallowEqual} from "@mouseover/js-utils";
 
 const controlsToList = (controls) => {
     const formElementsArray = [];

@@ -128,14 +128,18 @@ export const useForm = (props) => {
 
     }, [onValueChange, onValuesChange, lastChanged, state.values, state.validation]);
 
+    const form = useMemo(() => {
+        return {
+            setValue: setValueCallback,
+            setValues: setValuesCallback,
+        }
+    }, [setValueCallback, setValuesCallback]);
 
-    return {
-        setValue: setValueCallback,
-        setValues: setValuesCallback,
-        handleSubmit,
-        values: state.values,
-        defaultValues: state.lastInputValues,
-        lastChanged: lastChanged,
-        validation: state.validation
-    };
+    form.handleSubmit = handleSubmit;
+    form.values = state.values;
+    form.defaultValues = state.lastInputValues;
+    form.lastChanged = lastChanged;
+    form.validation = state.validation;
+
+    return form;
 };

@@ -5,7 +5,7 @@ import {mergeDeep, shallowEqual, updateValue} from "@mouseover/js-utils";
 
 const CHANGE_FIELD_VALUE = 'change_field_value';
 const CHANGE_FIELDS_VALUES = 'change_fields_values';
-const CHANGE_FROM_OUTSIDE = 'change_from_outside';
+const CHANGE_INPUT_VALUES = 'change_input_values';
 const CLEAR_FIELD_VALUE = 'reset_field';
 
 const initialState = {
@@ -43,19 +43,10 @@ const formReducer = (validator) => {
                     changes: {lastChanged: [action.name]}
                 };
 
-            case CHANGE_FROM_OUTSIDE:
-                let lastInputValues = state.lastInputValues;
-
-                for (let name in action.values) {
-                    if (action.values.hasOwnProperty(name)) {
-                        const value = action.values[name];
-                        lastInputValues = updateValue(lastInputValues, name, value);
-                    }
-                }
-
+            case CHANGE_INPUT_VALUES:
                 return {
                     ...state,
-                    lastInputValues
+                    lastInputValues: action.values
                 };
             default:
                 return state;
@@ -108,7 +99,7 @@ export const useForm = (props) => {
 
     useEffect(() => {
         if (inputValues && !shallowEqual(state.lastInputValues, inputValues)) {
-            dispatch({type: CHANGE_FROM_OUTSIDE, values: inputValues});
+            dispatch({type: CHANGE_INPUT_VALUES, values: inputValues});
             setValuesCallback(inputValues);
         }
     }, [inputValues, state.lastInputValues]);

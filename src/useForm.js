@@ -15,14 +15,23 @@ const initialState = {
     lastInputValues: {}
 };
 
+const createUpdateValuesAndValidation = (validator) => (state, name, value, valid = null) => {
+    const newValues = updateValue(state.values, name, value);
+    const fieldValidation = valid || validator.validateField(value, name);
+    return {
+        values: newValues,
+        validation: updateValidationResult(state.validation, name, fieldValidation)
+    }
+};
+
 const formReducer = (validator) => {
+    const updateValuesAndValidation = createUpdateValuesAndValidation(validator);
     return (state, action) => {
         switch (action.type) {
             case CHANGE_FIELD_VALUE:
                 return {
                     ...state,
-                    values: updateValue(state.values, action.name, action.value),
-                    validation: updateValidationResult(state.validation, action.name, action.validation),
+                    ...updateValuesAndValidation(state, action.name, action.value),
                     changes: {lastChanged: [action.name]}
                 };
 
@@ -38,8 +47,7 @@ const formReducer = (validator) => {
             case CLEAR_FIELD_VALUE:
                 return {
                     ...state,
-                    values: updateValue(state.values, action.name, null),
-                    validation: updateValidationResult(state.validation, action.name, true),
+                    ...updateValuesAndValidation(state, action.name, null, true),
                     changes: {lastChanged: [action.name]}
                 };
 
@@ -70,14 +78,9 @@ export const useForm = (props) => {
         initialState
     );
 
-    const validateAndDispatchNewValue = useCallback((name, value) => {
-        const validation = validator.validateField(value, name);
-        dispatch({type: CHANGE_FIELD_VALUE, name, value, validation});
-    }, [validator]);
-
     const setValueCallback = useCallback((value, name) => {
-            validateAndDispatchNewValue(name, value);
-    }, [validateAndDispatchNewValue]);
+        dispatch({type: CHANGE_FIELD_VALUE, name, value});
+    }, []);
 
     const setValuesCallback = useCallback((values) => {
         dispatch({type: CHANGE_FIELDS_VALUES, values, rules});

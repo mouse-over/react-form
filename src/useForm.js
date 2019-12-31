@@ -17,7 +17,7 @@ const initialState = {
 
 const createUpdateValuesAndValidation = (validator) => (state, name, value, valid = null) => {
     const newValues = updateValue(state.values, name, value);
-    const fieldValidation = valid || validator.validateField(value, name);
+    const fieldValidation = valid || validator.validateObjectField(newValues, name);
     return {
         values: newValues,
         validation: updateValidationResult(state.validation, name, fieldValidation)

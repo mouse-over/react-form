@@ -156,3 +156,63 @@ test('useForm submit valid', () => {
     valuesRef.current.handleSubmit();
     expect(onSubmit).toBeCalledWith(values, true);
 });
+
+test('useForm depend fields validation', () => {
+    const validationRules = {
+        depended: (values) => values.switcher === true ? {required: true} : {},
+    };
+
+    const values = {
+        depended: null,
+        switcher: true,
+    };
+
+    const {valuesRef, onSubmit} = setup({values, validationRules});
+    act(() => {
+        valuesRef.current.handleSubmit();
+    });
+
+    expect(onSubmit).toBeCalledWith(values, false);
+    expect(valuesRef.current.validation.valid).toBeFalsy();
+});
+
+test('useForm depend fields validation - valid submit', () => {
+    const validationRules = {
+        depended: (values) => values.switcher === true ? {required: true} : {},
+    };
+
+    const values = {
+        depended: null,
+        switcher: false,
+    };
+
+    const {valuesRef, onSubmit} = setup({values, validationRules});
+    act(() => {
+        valuesRef.current.handleSubmit();
+    });
+
+    expect(onSubmit).toBeCalledWith(values, true);
+    expect(valuesRef.current.validation.valid).toBeTruthy();
+});
+
+test('useForm depend fields validation - values change', () => {
+    const validationRules = {
+        depended: (values) => values.switcher === true ? {required: true} : {},
+    };
+
+    const values = {
+        depended: null,
+        switcher: true,
+    };
+
+    const {valuesRef} = setup({values, validationRules});
+    expect(valuesRef.current.validation.valid).toBeFalsy();
+
+    act(()=>{
+        valuesRef.current.setValues({
+            depended: null,
+            switcher: false,
+        });
+    });
+    expect(valuesRef.current.validation.valid).toBeTruthy();
+});

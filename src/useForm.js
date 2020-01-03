@@ -86,20 +86,6 @@ export const useForm = (props) => {
         dispatch({type: CHANGE_FIELDS_VALUES, values, rules});
     }, [dispatch, rules]);
 
-    const handleSubmit = useCallback((event) => {
-        if (event) {
-            if (typeof event.preventDefault === 'function') {
-                event.preventDefault()
-            }
-            if (typeof event.stopPropagation === 'function') {
-                event.stopPropagation()
-            }
-        }
-        if (onSubmit) {
-            onSubmit(state.values, state.validation.valid)
-        }
-    }, [state, onSubmit]);
-
     useEffect(() => {
         if (inputValues && !shallowEqual(state.lastInputValues, inputValues)) {
             dispatch({type: CHANGE_INPUT_VALUES, values: inputValues});
@@ -129,7 +115,20 @@ export const useForm = (props) => {
         }
     }, [setValueCallback, setValuesCallback]);
 
-    form.handleSubmit = handleSubmit;
+    form.handleSubmit = useCallback((event) => {
+        if (event) {
+            if (typeof event.preventDefault === 'function') {
+                event.preventDefault()
+            }
+            if (typeof event.stopPropagation === 'function') {
+                event.stopPropagation()
+            }
+        }
+        if (onSubmit) {
+            onSubmit(state.values, state.validation.valid, form)
+        }
+    }, [state, onSubmit, form]);
+
     form.values = state.values;
     form.defaultValues = state.lastInputValues;
     form.lastChanged = lastChanged;

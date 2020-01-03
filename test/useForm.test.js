@@ -44,7 +44,6 @@ const setup = (props) => {
         onSubmit,
         renderUtils,
         changeProps: (changedProps) => {
-            console.log('RERENDER');
             return renderUtils.rerender(<Component props={{...finalProps, ...changedProps}}/>);
         }
     };
@@ -148,13 +147,13 @@ test('useForm submit invalid', () => {
     const invalidValues = {...values, foo: 2};
     const {valuesRef, onSubmit} = setup({values: invalidValues, validationRules});
     valuesRef.current.handleSubmit();
-    expect(onSubmit).toBeCalledWith(invalidValues, false);
+    expect(onSubmit).toBeCalledWith(invalidValues, false, valuesRef.current);
 });
 
 test('useForm submit valid', () => {
     const {valuesRef, onSubmit} = setup({values, validationRules});
     valuesRef.current.handleSubmit();
-    expect(onSubmit).toBeCalledWith(values, true);
+    expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
 });
 
 test('useForm depend fields validation', () => {
@@ -172,7 +171,7 @@ test('useForm depend fields validation', () => {
         valuesRef.current.handleSubmit();
     });
 
-    expect(onSubmit).toBeCalledWith(values, false);
+    expect(onSubmit).toBeCalledWith(values, false, valuesRef.current);
     expect(valuesRef.current.validation.valid).toBeFalsy();
 });
 
@@ -191,7 +190,7 @@ test('useForm depend fields validation - valid submit', () => {
         valuesRef.current.handleSubmit();
     });
 
-    expect(onSubmit).toBeCalledWith(values, true);
+    expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
     expect(valuesRef.current.validation.valid).toBeTruthy();
 });
 

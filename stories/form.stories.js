@@ -2,11 +2,10 @@ import React from 'react';
 
 import {storiesOf} from '@storybook/react';
 
-import Form from "../src/components/Form";
 import WrapperDecorator from "./WrapperDecorator";
 
 import {action} from '@storybook/addon-actions';
-import {FormField} from "../src/components";
+import {FormField, Form} from "../src/components";
 
 storiesOf('Form', module)
     .addDecorator(WrapperDecorator)

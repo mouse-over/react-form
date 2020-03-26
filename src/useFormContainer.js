@@ -4,7 +4,7 @@ export const useFormContainer = (containerName, form) => {
     return {
         values: values[containerName] || {},
         setValue: (value, name) => setValue(value, [containerName, name]),
-        validation: validation[containerName] ? validation[containerName].children : {children: {}, valid: true},
+        validation: validation.children && validation.children[containerName] ? validation.children[containerName] : {children: {}, valid: true},
         defaultValues: defaultValues[containerName] || {},
         setValues: (values) => {
             for (let name in values) {

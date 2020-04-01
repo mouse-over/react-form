@@ -118,4 +118,53 @@ storiesOf('Form', module)
                 form={form}/>
         </>}>
         <button type="submit" className="btn btn-primary">Sign in</button>
+    </Form>)
+    .add('with custom form groups', () => <Form
+        onChange={action('onChange')}
+        onSubmit={action('onSubmit')}
+        validationRules={{
+            auth: {
+                children: {
+                    username: {
+                        required: true,
+                        minLength: 4
+                    },
+                    password: {
+                        required: true,
+                        minLength: 4
+                    }
+                }
+            }
+        }}
+        render={(form) => <>
+            <FormField
+                name={['auth','username']}
+                label='Username'
+                elementType='text'
+                groupContainer={CustomGroupContainer}
+                renderLabelElement={renderLabel}
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide username',
+                    className: 'input-sm form-control input-s-sm inline'
+                }}
+                form={form}/>
+            <FormField
+                name={['auth','password']}
+                label='Password'
+                elementType='text'
+                groupContainer={CustomGroupContainer}
+                renderLabelElement={renderLabel}
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide password',
+                    className: 'input-sm form-control input-s-sm inline'
+                }}
+                form={form}/>
+        </>}>
+        <button type="submit" className="btn btn-primary">Sign in</button>
     </Form>);
+
+
+const renderLabel = ({label}) => <><small>{label}</small><br /></>;
+const CustomGroupContainer = ({children}) => <label className='inline'>{children}</label>

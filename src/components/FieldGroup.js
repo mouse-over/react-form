@@ -4,8 +4,13 @@ import DebounceInput from "./DebounceInput";
 import {InfoMessage, ValidationMessages, InputAddons, GroupContainer, CheckboxFieldGroup, InputFieldGroup} from "./../components/field";
 import {Checkbox} from "./../components/input";
 
-const createElementClasses = ({elementType, touched, valid}) => {
+const createElementClasses = ({elementType, touched, valid, className}) => {
     let inputClasses = [];
+
+    if (className) {
+        inputClasses.push('className');
+    }
+
     if (elementType !== 'checkbox') {
         inputClasses.push('form-control');
     }
@@ -96,7 +101,8 @@ const FieldGroupContent = (props) => {
         value: inValue,
         defaultValue,
         validation,
-        render
+        render,
+        groupContainer
     } = props;
 
     const input = useInput({
@@ -118,10 +124,11 @@ const FieldGroupContent = (props) => {
     const validationMessages = renders.renderValidationMessages(input);
     const labelElement = renders.renderLabelElement(props);
     const messageElement = renders.renderMessageElement(props);
+    const Container = groupContainer || GroupContainer;
 
-    return <GroupContainer className={groupClass}>
+    return <Container className={groupClass}>
         {(render || renderContent)(props, {validationMessages, messageElement, labelElement, inputElement})}
-    </GroupContainer>;
+    </Container>;
 };
 
 export default FieldGroup;

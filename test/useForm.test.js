@@ -215,3 +215,28 @@ test('useForm depend fields validation - values change', () => {
     });
     expect(valuesRef.current.validation.valid).toBeTruthy();
 });
+
+test('useForm change custom validation rule - invalid', () => {
+    validationRules.foo = {
+        custom: {
+            message: "hej",
+            validate: (value) => {
+                expect(value).toBe(20);
+                return false;
+            }
+        }
+    };
+    const {valuesRef} = setup({values, validationRules});
+    expect(valuesRef.current.validation.valid).toBeFalsy();
+});
+
+test('useForm change custom validation rule - valid', () => {
+    validationRules.foo = {
+        custom: {
+            message: "hej",
+            validate: () => true
+        }
+    };
+    const {valuesRef} = setup({values, validationRules});
+    expect(valuesRef.current.validation.valid).toBeTruthy();
+});

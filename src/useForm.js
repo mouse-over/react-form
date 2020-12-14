@@ -7,6 +7,7 @@ const CHANGE_FIELD_VALUE = 'change_field_value';
 const CHANGE_FIELDS_VALUES = 'change_fields_values';
 const CHANGE_INPUT_VALUES = 'change_input_values';
 const CLEAR_FIELD_VALUE = 'reset_field';
+const VALIDATE = 'validate';
 
 const initialState = {
     values: {},
@@ -56,6 +57,13 @@ const formReducer = (validator) => {
                     ...state,
                     lastInputValues: action.values
                 };
+
+            case VALIDATE:
+                return {
+                    ...state,
+                    validation: validator.validateObject(state.values || {})
+                };
+
             default:
                 return state;
         }
@@ -107,6 +115,10 @@ export const useForm = (props) => {
         }
 
     }, [onValueChange, onValuesChange, lastChanged, state.values, state.validation]);
+
+    useEffect(() => {
+        dispatch({type: VALIDATE});
+    }, [inputValues, dispatch]);
 
     const form = useMemo(() => {
         return {

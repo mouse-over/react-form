@@ -77,8 +77,8 @@ storiesOf('Form', module)
                     placeholder: 'please provide password',
                 }}
                 form={form}/>
+           <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
         </>}>
-        <button type="submit" className="btn btn-primary">Sign in</button>
     </Form>)
     .add('authentication using render and nested names', () => <Form
         onChange={action('onChange')}
@@ -116,8 +116,8 @@ storiesOf('Form', module)
                     placeholder: 'please provide password',
                 }}
                 form={form}/>
+            <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
         </>}>
-        <button type="submit" className="btn btn-primary">Sign in</button>
     </Form>)
     .add('with custom form groups', () => <Form
         onChange={action('onChange')}
@@ -161,8 +161,47 @@ storiesOf('Form', module)
                     className: 'input-sm form-control input-s-sm inline'
                 }}
                 form={form}/>
+            <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
         </>}>
-        <button type="submit" className="btn btn-primary">Sign in</button>
+    </Form>)
+    .add('custom rule in validationRules', () => <Form
+        onChange={action('onChange')}
+        onSubmit={action('onSubmit')}
+        validationRules={{
+            username: {
+                required: true,
+                minLength: 4
+            },
+            password: {
+                required: true,
+                minLength: 3,
+                custom: {
+                    message: 'Not foo',
+                    validate: (value) => value === 'foo'
+                }
+            }
+        }}
+        render={(form) => <>
+            <FormField
+                name='username'
+                label='Username'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide username',
+                }}
+                form={form}/>
+            <FormField
+                name='password'
+                label='Password'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide password',
+                }}
+                form={form}/>
+            <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
+        </>}>
     </Form>);
 
 

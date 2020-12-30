@@ -1,8 +1,6 @@
 import React from 'react';
-import {useForm} from "../src";
-import {act, cleanup, render} from "@testing-library/react";
-
-const FakeComponent = ({children, props}) => children(useForm(props));
+import {act, cleanup} from "@testing-library/react";
+import setup from "./setup";
 
 const validationRules = {
     foo: {
@@ -18,35 +16,6 @@ const validationRules = {
 const values = {
     foo: 20,
     bar: 'bar'
-};
-
-const setup = (props) => {
-    const onValueChange = jest.fn();
-    const onValuesChange = jest.fn();
-    const onSubmit = jest.fn();
-    const returnVal = {current: null};
-    const finalProps = {...props, onValueChange, onValuesChange, onSubmit};
-
-    const Component = ({props}) => <FakeComponent props={props}>
-        {
-            (output) => {
-                returnVal.current = output;
-                return null;
-            }
-        }
-    </FakeComponent>;
-
-    const renderUtils = render(<Component props={finalProps}/>);
-    return {
-        valuesRef: returnVal,
-        onValuesChange,
-        onValueChange,
-        onSubmit,
-        renderUtils,
-        changeProps: (changedProps) => {
-            return renderUtils.rerender(<Component props={{...finalProps, ...changedProps}}/>);
-        }
-    };
 };
 
 afterEach(cleanup);

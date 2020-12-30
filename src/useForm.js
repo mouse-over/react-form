@@ -1,7 +1,8 @@
 import {useCallback, useEffect, useMemo, useReducer} from 'react';
 import {updateValidationResult} from "@mouseover/js-validation";
 import {useValidator} from "@mouseover/js-validation-hook";
-import {mergeDeep, shallowEqual, updateValue} from "@mouseover/js-utils";
+import {mergeDeep, pathWithChildren, shallowEqual, updateValue} from "@mouseover/js-utils";
+import {getValue} from "@mouseover/js-utils";
 
 const CHANGE_FIELD_VALUE = 'change_field_value';
 const CHANGE_FIELDS_VALUES = 'change_fields_values';
@@ -106,8 +107,9 @@ export const useForm = (props) => {
     useEffect(() => {
         if (onValueChange && lastChanged.length === 1) {
             const name = lastChanged[0];
-            const value = state.values[name];
-            onValueChange(name, value, state.validation.children[name] ? state.validation.children[name].valid : null);
+            const value = getValue(state.values, name);
+            const validation = getValue(state.validation, pathWithChildren(name));
+            onValueChange(name, value, validation ? validation.valid : null);
         }
 
         if (onValuesChange && lastChanged.length > 0) {

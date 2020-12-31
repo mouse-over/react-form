@@ -1,15 +1,18 @@
-export const useFormContainer = (containerName, form) => {
-    const {values = {}, validation = {}, defaultValues = {}, setValue, handleSubmit} = form;
+import {getValue, pathWithChildren} from "@mouseover/js-utils";
+import {useMemo} from "react";
 
+export const useFormContainer = (path, form) => {
+    const {values = {}, validation = {}, defaultValues = {}, setValue, handleSubmit} = form;
+    const pathMemo = useMemo(() => Array.isArray(path) ? path : [path], [path]);
     return {
-        values: values[containerName] || {},
-        setValue: (value, name) => setValue(value, [containerName, name]),
-        validation: validation.children && validation.children[containerName] ? validation.children[containerName] : {children: {}, valid: true},
-        defaultValues: defaultValues[containerName] || {},
+        values: getValue(values, pathMemo) || {},
+        setValue: (value, name) => setValue(value, [...pathMemo, name]),
+        validation: getValue(validation, pathWithChildren(pathMemo)) || {children: {}, valid: true},
+        defaultValues: getValue(defaultValues, pathMemo) || {},
         setValues: (values) => {
             for (let name in values) {
                 if (values.hasOwnProperty(name)) {
-                    setValue([containerName, name], values[name]);
+                    setValue(values[name], [...pathMemo, name]);
                 }
             }
         },

@@ -26,7 +26,7 @@ const values = {
 
 afterEach(cleanup);
 
-test('useFormContainer output props check', () => {
+test('useForm nested output props check', () => {
     const {valuesRef} = setup({values, validationRules});
     expect(valuesRef.current.setValue).toBeInstanceOf(Function);
     expect(valuesRef.current.setValues).toBeInstanceOf(Function);
@@ -38,7 +38,7 @@ test('useFormContainer output props check', () => {
     expect(valuesRef.current.validation.valid).toBeTruthy();
 });
 
-test('useFormContainer change single value valid', () => {
+test('useForm nested change single value valid', () => {
     const {valuesRef, onValuesChange, onValueChange} = setup({values, validationRules});
 
     act(()=>{
@@ -59,7 +59,7 @@ test('useFormContainer change single value valid', () => {
     expect(onValuesChange).toBeCalledWith(expectedValues, true);
 });
 
-test('useFormContainer change single value invalid', () => {
+test('useForm nested change single value invalid', () => {
     const {valuesRef, onValuesChange, onValueChange} = setup({values, validationRules});
 
     act(()=>{
@@ -71,7 +71,7 @@ test('useFormContainer change single value invalid', () => {
     expect(onValuesChange).toBeCalledWith({container: {...values.container, foo: 2}}, false);
 });
 
-test('useFormContainer change multiple values valid', () => {
+test('useForm nested change multiple values valid', () => {
     const {valuesRef, onValuesChange} = setup({values, validationRules});
 
     const expectedValues = {container: {foo: 12, bar: 'changed value'}};
@@ -87,7 +87,7 @@ test('useFormContainer change multiple values valid', () => {
     expect(onValuesChange).toBeCalledWith(expectedValues, true);
 });
 
-test('useFormContainer change multiple values invalid', () => {
+test('useForm nested change multiple values invalid', () => {
     const {valuesRef, onValuesChange} = setup({values, validationRules});
 
     const expectedValues = {container: {foo: 2, bar: 'changed value'}};
@@ -99,7 +99,7 @@ test('useFormContainer change multiple values invalid', () => {
     expect(valuesRef.current.validation.valid).toBeFalsy();
 });
 
-test('useFormContainer change from outside - valid single value', () => {
+test('useForm nested change from outside - valid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values, validationRules});
 
     // mimic outside change with valid single value
@@ -110,7 +110,7 @@ test('useFormContainer change from outside - valid single value', () => {
     expect(onValuesChange).toBeCalled();
 });
 
-test('useFormContainer change from outside - invalid single value', () => {
+test('useForm nested change from outside - invalid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values, validationRules});
     changeProps({values: {container: {foo: 2}}});
     expect(valuesRef.current.validation.valid).toBeFalsy();
@@ -119,20 +119,20 @@ test('useFormContainer change from outside - invalid single value', () => {
     expect(onValuesChange).toBeCalled();
 });
 
-test('useFormContainer submit invalid', () => {
+test('useForm nested submit invalid', () => {
     const invalidValues = {container: {...values.container,  foo: 2}};
     const {valuesRef, onSubmit} = setup({values: invalidValues, validationRules});
     valuesRef.current.handleSubmit();
     expect(onSubmit).toBeCalledWith(invalidValues, false, valuesRef.current);
 });
 
-test('useFormContainer submit valid', () => {
+test('useForm nested submit valid', () => {
     const {valuesRef, onSubmit} = setup({values, validationRules});
     valuesRef.current.handleSubmit();
     expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
 });
 
-test('useFormContainer change custom validation rule - valid', () => {
+test('useForm nested change custom validation rule - valid', () => {
     validationRules.container.children.foo = {
         custom: {
             message: "hej",

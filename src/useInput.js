@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 import {parseFloatOrNull, parseIntOrNull} from "@mouseover/js-utils";
 import {isEmpty} from "@mouseover/js-utils";
 
@@ -46,7 +46,8 @@ export const useInput = (props) => {
         valueType,
         value: currentValue,
         defaultValue,
-        validation
+        validation,
+        isSubmitted
     } = props;
 
     const [touched, setTouched] = useState(false);
@@ -58,6 +59,12 @@ export const useInput = (props) => {
 
         setTouched(true);//changedValue !== defaultValue);
     }, [name, onChange, defaultValue]);
+
+    useEffect(() => {
+        if (isSubmitted) {
+            setTouched(true);
+        }
+    }, [isSubmitted, setTouched]);
 
     const [value, setValue] = useValue(currentValue, valueType, changeCallback);
 

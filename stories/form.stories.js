@@ -80,6 +80,42 @@ storiesOf('Form', module)
            <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
         </>}>
     </Form>)
+    .add('authentication using render - outer submitted', () => <Form
+        onChange={action('onChange')}
+        onSubmit={action('onSubmit')}
+        isSubmitted={true}
+        validationRules={{
+            username: {
+                required: true,
+                minLength: 4
+            },
+            password: {
+                required: true,
+                minLength: 4
+            }
+        }}
+        render={(form) => <>
+            <FormField
+                name='username'
+                label='Username'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide username',
+                }}
+                form={form}/>
+            <FormField
+                name='password'
+                label='Password'
+                elementType='text'
+                elementConfig={{
+                    type: 'text',
+                    placeholder: 'please provide password',
+                }}
+                form={form}/>
+            <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
+        </>}>
+    </Form>)
     .add('authentication using render and nested names', () => <Form
         onChange={action('onChange')}
         onSubmit={action('onSubmit')}

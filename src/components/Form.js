@@ -42,7 +42,18 @@ const mapInput = (form, defaultGroupClass) => (input) => {
 };
 
 
-export const Form = ({className = 'form', controls, defaultGroupClass = 'form-group', validationRules: inputValidationRules, values: inDefaultValues, onChange, onSubmit, children, render}) => {
+export const Form = ({
+                         className = 'form',
+                         controls,
+                         defaultGroupClass = 'form-group',
+                         validationRules: inputValidationRules,
+                         values: inDefaultValues,
+                         onChange,
+                         onSubmit,
+                         children,
+                         render,
+                         isSubmitted
+                     }) => {
 
     const [defaultValues, setDefaultValues] = useState({});
     const [validationRules, setValidationRules] = useState(inputValidationRules);
@@ -64,7 +75,8 @@ export const Form = ({className = 'form', controls, defaultGroupClass = 'form-gr
             values: defaultValues,
             onValuesChange: onChange,
             onSubmit,
-            validationRules
+            validationRules,
+            isSubmitted
         }
     );
 

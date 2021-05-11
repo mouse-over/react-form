@@ -7,6 +7,7 @@ export const FormField = (props) => {
     const {values = {}, validation = {}, defaultValues = {}, setValue} = form;
     return (<FieldGroup
         {...props}
+        isSubmitted={form.isSubmitted}
         name={name}
         value={getValue(values, name)}
         validation={getValue(validation, pathWithChildren(name))}

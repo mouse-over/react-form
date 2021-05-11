@@ -102,7 +102,8 @@ const FieldGroupContent = (props) => {
         defaultValue,
         validation,
         render,
-        groupContainer
+        groupContainer,
+        isSubmitted
     } = props;
 
     const input = useInput({
@@ -111,7 +112,8 @@ const FieldGroupContent = (props) => {
         value: inValue,
         defaultValue,
         valueType,
-        validation
+        validation,
+        isSubmitted
     });
 
     const {touched, element, valid} = input;

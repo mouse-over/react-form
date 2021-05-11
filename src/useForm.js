@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useReducer} from 'react';
+import {useCallback, useEffect, useMemo, useReducer, useState} from 'react';
 import {updateValidationResult} from "@mouseover/js-validation";
 import {useValidator} from "@mouseover/js-validation-hook";
 import {mergeDeep, pathWithChildren, shallowEqual, updateValue} from "@mouseover/js-utils";
@@ -77,9 +77,11 @@ export const useForm = (props) => {
         onValueChange,
         onValuesChange,
         onSubmit,
-        validationRules: rules
+        validationRules: rules,
+        isSubmitted: inIsSubmitted
     } = props;
 
+    const [isSubmitted, setIsSubmitted] = useState(inIsSubmitted || false);
     const validator = useValidator(rules);
     const memoizedReducer = useMemo(() => formReducer(validator), [validator]);
     const [state, dispatch] = useReducer(
@@ -122,6 +124,12 @@ export const useForm = (props) => {
         dispatch({type: VALIDATE});
     }, [inputValues, dispatch]);
 
+    useEffect(() => {
+        if (isSubmitted !== inIsSubmitted) {
+            setIsSubmitted(inIsSubmitted);
+        }
+    }, [setIsSubmitted, inIsSubmitted, isSubmitted]);
+
     const form = useMemo(() => {
         return {
             setValue: setValueCallback,
@@ -138,15 +146,17 @@ export const useForm = (props) => {
                 event.stopPropagation()
             }
         }
+        setIsSubmitted(true);
         if (onSubmit) {
             onSubmit(state.values, state.validation.valid, form)
         }
-    }, [state, onSubmit, form]);
+    }, [state, onSubmit, form, setIsSubmitted]);
 
     form.values = state.values;
     form.defaultValues = state.lastInputValues;
     form.lastChanged = lastChanged;
     form.validation = state.validation;
+    form.isSubmitted = isSubmitted;
 
     return form;
 };

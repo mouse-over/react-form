@@ -209,3 +209,25 @@ test('useForm change custom validation rule - valid', () => {
     const {valuesRef} = setup({values, validationRules});
     expect(valuesRef.current.validation.valid).toBeTruthy();
 });
+
+test('useForm array validation - valid', () => {
+    const {valuesRef} = setup({
+            values: {collection: [
+                    {foo: 12, bar: 'baz'}
+                ]},
+            validationRules: {collection: {isArray: true, items: {children: validationRules}}}
+        }
+    );
+    expect(valuesRef.current.validation.valid).toBeTruthy();
+});
+
+test('useForm array validation - invalid', () => {
+    const {valuesRef} = setup({
+            values: {collection: [
+                    {foo: 12, bar: null}
+                ]},
+            validationRules: {collection: {isArray: true, items: {children: validationRules}}}
+        }
+    );
+    expect(valuesRef.current.validation.valid).toBeFalsy();
+});

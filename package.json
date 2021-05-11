@@ -1,6 +1,6 @@
 {
   "name": "@mouseover/react-form",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "main": "lib/react-form.js",
   "repository": "github:mouse-over/react-form",
   "scripts": {

@@ -115,14 +115,18 @@ test('useForm change from outside - valid single value', () => {
 test('useForm submit invalid', () => {
     const invalidValues = {...values, foo: 2};
     const {valuesRef, onSubmit} = setup({values: invalidValues, validationRules});
-    valuesRef.current.handleSubmit();
+    act(() => {
+        valuesRef.current.handleSubmit();
+    });
     expect(onSubmit).toBeCalledWith(invalidValues, false, valuesRef.current);
+    expect(valuesRef.current.isSubmitted).toBe(true);
 });
 
 test('useForm submit valid', () => {
     const {valuesRef, onSubmit} = setup({values, validationRules});
     valuesRef.current.handleSubmit();
     expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
+    expect(valuesRef.current.isSubmitted).toBe(true);
 });
 
 test('useForm depend fields validation', () => {

@@ -81,7 +81,7 @@ export const useForm = (props) => {
         isSubmitted: inIsSubmitted
     } = props;
 
-    const [isSubmitted, setIsSubmitted] = useState(inIsSubmitted || false);
+    const [isSubmitted, setIsSubmitted] = useState(inIsSubmitted);
     const validator = useValidator(rules);
     const memoizedReducer = useMemo(() => formReducer(validator), [validator]);
     const [state, dispatch] = useReducer(
@@ -125,10 +125,10 @@ export const useForm = (props) => {
     }, [inputValues, dispatch]);
 
     useEffect(() => {
-        if (isSubmitted !== inIsSubmitted) {
-            setIsSubmitted(inIsSubmitted);
+        if (inIsSubmitted) {
+            setIsSubmitted(true);
         }
-    }, [setIsSubmitted, inIsSubmitted, isSubmitted]);
+    }, [setIsSubmitted, inIsSubmitted]);
 
     const form = useMemo(() => {
         return {

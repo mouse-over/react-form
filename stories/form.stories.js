@@ -77,7 +77,7 @@ storiesOf('Form', module)
                     placeholder: 'please provide password',
                 }}
                 form={form}/>
-           <button type="submit" className="btn btn-primary" disabled={!form.validation.valid}>Sign in</button>
+           <button type="submit" className="btn btn-primary">Sign in</button>
         </>}>
     </Form>)
     .add('authentication using render - outer submitted', () => <Form

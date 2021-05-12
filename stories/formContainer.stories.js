@@ -9,8 +9,8 @@ import {FormField, Form} from "../src/components";
 import {useFormContainer} from "../src";
 
 const FormContainerWrapper = ({form, render}) => {
-  const container = useFormContainer('auth', form);
-  return render(container);
+    const container = useFormContainer('auth', form);
+    return render(container);
 };
 
 storiesOf('FormContainer', module)

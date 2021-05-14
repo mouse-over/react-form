@@ -52,7 +52,8 @@ export const Form = ({
                          onSubmit,
                          children,
                          render,
-                         isSubmitted
+                         isSubmitted,
+                         ...props
                      }) => {
 
     const [defaultValues, setDefaultValues] = useState({});
@@ -65,15 +66,13 @@ export const Form = ({
     }, [inDefaultValues, defaultValues]);
 
     useEffect(() => {
-        if (controls) {
+        if (controls && !inputValidationRules) {
             const rules = controlsToValidationRules(controls);
             setValidationRules(rules);
+        } else {
+            setValidationRules(inputValidationRules || {});
         }
-    }, [controls]);
-
-    useEffect(() => {
-        setValidationRules(inputValidationRules);
-    }, [inputValidationRules]);
+    }, [controls, inputValidationRules]);
 
     const form = useForm({
             values: defaultValues,
@@ -84,7 +83,7 @@ export const Form = ({
         }
     );
 
-    return (<form onSubmit={form.handleSubmit} className={className}>
+    return (<form onSubmit={form.handleSubmit} className={className} {...props}>
         {controlsToList(controls).map(mapInput(form, defaultGroupClass))}
         {render ? render(form) : null}
         {children}

@@ -71,6 +71,10 @@ export const Form = ({
         }
     }, [controls]);
 
+    useEffect(() => {
+        setValidationRules(inputValidationRules);
+    }, [inputValidationRules]);
+
     const form = useForm({
             values: defaultValues,
             onValuesChange: onChange,

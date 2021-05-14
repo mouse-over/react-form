@@ -108,6 +108,8 @@ test('useFormContainer setValues', () => {
 
 test('useFormContainer submit', () => {
     const {valuesRef, onSubmit} = setupFormContainer({values, validationRules, path: 'container'});
-    valuesRef.container.handleSubmit();
+    act(()=> {
+        valuesRef.container.handleSubmit();
+    });
     expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
 });

@@ -103,7 +103,9 @@ test('useForm nested change from outside - valid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values, validationRules});
 
     // mimic outside change with valid single value
-    changeProps({values: {container: {foo: 12}}});
+    act(()=> {
+        changeProps({values: {container: {foo: 12}}});
+    });
     expect(valuesRef.current.validation.valid).toBeTruthy();
     expect(valuesRef.current.lastChanged).toStrictEqual(['container']);
     expect(onValueChange).toBeCalled();
@@ -112,7 +114,9 @@ test('useForm nested change from outside - valid single value', () => {
 
 test('useForm nested change from outside - invalid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values, validationRules});
-    changeProps({values: {container: {foo: 2}}});
+    act(()=> {
+        changeProps({values: {container: {foo: 2}}});
+    });
     expect(valuesRef.current.validation.valid).toBeFalsy();
     expect(valuesRef.current.lastChanged).toStrictEqual(['container']);
     expect(onValueChange).toBeCalled();
@@ -122,13 +126,17 @@ test('useForm nested change from outside - invalid single value', () => {
 test('useForm nested submit invalid', () => {
     const invalidValues = {container: {...values.container,  foo: 2}};
     const {valuesRef, onSubmit} = setup({values: invalidValues, validationRules});
-    valuesRef.current.handleSubmit();
+    act(()=> {
+        valuesRef.current.handleSubmit();
+    });
     expect(onSubmit).toBeCalledWith(invalidValues, false, valuesRef.current);
 });
 
 test('useForm nested submit valid', () => {
     const {valuesRef, onSubmit} = setup({values, validationRules});
-    valuesRef.current.handleSubmit();
+    act(()=> {
+        valuesRef.current.handleSubmit();
+    });
     expect(onSubmit).toBeCalledWith(values, true, valuesRef.current);
 });
 

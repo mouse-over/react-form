@@ -9,7 +9,6 @@ const CHANGE_FIELDS_VALUES = 'change_fields_values';
 const CHANGE_INPUT_VALUES = 'change_input_values';
 const CLEAR_FIELD_VALUE = 'reset_field';
 const VALIDATE = 'validate';
-const VALIDATION_CHANGED = 'validation_changed';
 
 const initialState = {
     values: {},
@@ -61,7 +60,6 @@ const formReducer = (validator) => {
                 };
 
             case VALIDATE:
-            case VALIDATION_CHANGED:
                 return {
                     ...state,
                     validation: validator.validateObject(state.values || {})
@@ -84,9 +82,9 @@ export const useForm = (props) => {
     } = props;
 
     const [isSubmitted, setIsSubmitted] = useState(inIsSubmitted);
-    const [currentRules, setCurrentRules] = useState(rules);
+    const [currentRules, setCurrentRules] = useState(rules || {});
     useEffect(() => {
-        setCurrentRules((current) => shallowEqual(rules, current) ? current : rules);
+        setCurrentRules((current) => shallowEqual(rules, current) ? current : (rules || {}));
     }, [rules, setCurrentRules])
 
     const validator = useValidator(currentRules);
@@ -128,12 +126,10 @@ export const useForm = (props) => {
     }, [onValueChange, onValuesChange, lastChanged, state.values, state.validation]);
 
     useEffect(() => {
-        dispatch({type: VALIDATE});
-    }, [inputValues, dispatch]);
-
-    useEffect(() => {
-        dispatch({type: VALIDATION_CHANGED});
-    }, [validator, dispatch]);
+        if (validator) {
+            dispatch({type: VALIDATE, values: inputValues, rules: validator.rules});
+        }
+    }, [inputValues, validator, dispatch]);
 
     useEffect(() => {
         if (inIsSubmitted) {

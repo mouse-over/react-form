@@ -103,7 +103,7 @@ test('useForm change from outside - invalid', () => {
     expect(onValuesChange).toBeCalled();
 });
 
-test('useForm change from outside - valid single value', () => {
+test('useForm change values from outside - valid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values, validationRules});
 
     // mimic outside change with valid single value
@@ -112,6 +112,20 @@ test('useForm change from outside - valid single value', () => {
     });
     expect(valuesRef.current.validation.valid).toBeTruthy();
     expect(valuesRef.current.lastChanged).toStrictEqual(['foo']);
+    expect(onValueChange).toBeCalled();
+    expect(onValuesChange).toBeCalled();
+});
+
+test('useForm change validationRules from outside - valid single value', () => {
+    const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values: {foo: 12}, validationRules});
+
+    // mimic outside change with valid single value
+    act(()=> {
+        changeProps({validationRules: {...validationRules, bar: {}}});
+    });
+
+    expect(valuesRef.current.validation.valid).toBeTruthy();
+    //expect(valuesRef.current.lastChanged).toStrictEqual(['foo']);
     expect(onValueChange).toBeCalled();
     expect(onValuesChange).toBeCalled();
 });

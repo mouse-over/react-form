@@ -122,7 +122,7 @@ export const useForm = (props) => {
 
     useEffect(() => {
         dispatch({type: VALIDATE});
-    }, [inputValues, dispatch]);
+    }, [inputValues, rules, dispatch]);
 
     useEffect(() => {
         if (inIsSubmitted) {

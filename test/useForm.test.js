@@ -119,6 +119,10 @@ test('useForm change values from outside - valid single value', () => {
 test('useForm change validationRules from outside - valid single value', () => {
     const {valuesRef, onValuesChange, onValueChange, changeProps} = setup({values: {foo: 12}, validationRules});
 
+    act(()=> {
+        changeProps({validationRules: {...validationRules}});
+    });
+
     // mimic outside change with valid single value
     act(()=> {
         changeProps({validationRules: {...validationRules, bar: {}}});

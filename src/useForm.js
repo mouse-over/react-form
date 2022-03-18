@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {updateValidationResult} from "@mouseover/js-validation";
 import {useValidator} from "@mouseover/js-validation-hook";
 import {mergeDeep, pathWithChildren, shallowEqual, updateValue} from "@mouseover/js-utils";
@@ -111,19 +111,24 @@ export const useForm = (props) => {
 
     const {lastChanged} = state.changes;
 
+    const dependRef = useRef(null);
     useEffect(() => {
-        if (onValueChange && lastChanged.length === 1) {
-            const name = lastChanged[0];
+        dependRef.current = {onValueChange, onValuesChange, lastChanged, validation: state.validation};
+    }, [dependRef, onValueChange, onValuesChange, lastChanged, state.validation])
+
+    useEffect(() => {
+        if (dependRef.current.onValueChange && dependRef.current.lastChanged.length === 1) {
+            const name = dependRef.current.lastChanged[0];
             const value = getValue(state.values, name);
-            const validation = getValue(state.validation, pathWithChildren(name));
-            onValueChange(name, value, validation ? validation.valid : null);
+            const validation = getValue(dependRef.current.validation, pathWithChildren(name));
+            dependRef.current.onValueChange(name, value, validation ? validation.valid : null);
         }
 
-        if (onValuesChange && lastChanged.length > 0) {
-            onValuesChange(state.values, state.validation.valid);
+        if (dependRef.current.onValuesChange && dependRef.current.lastChanged.length > 0) {
+            dependRef.current.onValuesChange(state.values, dependRef.current.validation.valid);
         }
 
-    }, [onValueChange, onValuesChange, lastChanged, state.values, state.validation]);
+    }, [dependRef, state.values]);
 
     useEffect(() => {
         if (validator) {

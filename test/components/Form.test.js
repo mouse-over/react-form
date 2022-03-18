@@ -2,6 +2,7 @@ import React from 'react';
 
 import {cleanup, render} from "@testing-library/react";
 import {Form} from "../../src/components";
+import {act} from "react-dom/test-utils";
 
 afterEach(cleanup);
 
@@ -33,6 +34,13 @@ const values = {
 
 test('Form creation', () => {
     const {changeProps} = setup({values});
-    changeProps({isSubmitted: true});
-    changeProps({validationRules});
+    act(() => {
+        changeProps({isSubmitted: true});
+    });
+
+    act(() => {
+        changeProps({validationRules});
+    })
+
+
 });

@@ -129,9 +129,10 @@ test('useForm change validationRules from outside - valid single value', () => {
     });
 
     expect(valuesRef.current.validation.valid).toBeTruthy();
-    //expect(valuesRef.current.lastChanged).toStrictEqual(['foo']);
-    expect(onValueChange).toBeCalled();
-    expect(onValuesChange).toBeCalled();
+
+    // be sure then only initial changes triggered and not by changing validationRules
+    expect(onValueChange).toBeCalledTimes(1);
+    expect(onValuesChange).toBeCalledTimes(1);
 });
 
 test('useForm submit invalid', () => {

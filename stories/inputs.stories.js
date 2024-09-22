@@ -14,6 +14,14 @@ const InputHoc = ({value:inValue, ...props}) => {
 storiesOf('Inputs', module)
     .addDecorator(WrapperDecorator)
     .add('text', () => <InputHoc value={null} elementType="text"/>)
+    .add('number', () => <InputHoc value={null} elementType="input"
+                                   elementConfig={{
+                                       type: 'number',
+                                       placeholder: 'number',
+                                       min: 10,
+                                       max: 19
+                                   }}
+                                   valueType="number"/>)
     .add('checkbox', () => <InputHoc value={false} elementType="checkbox"/>)
     .add('select', () => <InputHoc value={'one'} elementType="select" options={ [
         {value: 'one', label: 'One'},

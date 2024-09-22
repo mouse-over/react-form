@@ -23,6 +23,7 @@ export const DebounceInput = (props) => {
 
     useEffect(() => {
         if (currentEvent && propagate) {
+            console.log('DO IT!', currentEvent.target.value, propagate);
             onChange(currentEvent);
             setCurrentEvent(null);
             setPropagate(false);
@@ -31,10 +32,18 @@ export const DebounceInput = (props) => {
 
     const handleChange = useCallback((event) => {
         setCurrentEvent({target: event.target});
+
+        // hack for firefox to handle number inputs button up/down
+        if (debounce && !hasFocus && event.target.getAttribute('type') === 'number') {
+            onChange({target: event.target});
+            setCurrentEvent(null);
+            setPropagate(false);
+        }
+
         if (!debounce) {
             setPropagate(true);
         }
-    }, [debounce]);
+    }, [debounce, hasFocus]);
 
     const handleKey = useCallback((event) => {
         if (event.key === "Enter") {
